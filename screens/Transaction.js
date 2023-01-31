@@ -79,41 +79,44 @@ export default class TransactionScreen extends Component {
 
            Alert.alert("Livro entregue para o aluno!");
         } else {
-          var { bookName, studentName } = this.state;
-          this.initiateBookReturn(bookId, studentId, bookName, studentName);
-
-
-          Alert.alert("Livro retornado à biblioteca!");
+          // crie as variavéis bookName e studentName
+          
+          // chame a função de retornar os livros
+          
+          // mostre um alerta para a retirada do livro
+          
         }
       });
   };
 
   getBookDetails = bookId => {
+    //tira o espaço caso alguém coloque
     bookId = bookId.trim();
+    // procura dentro da coleção de livros
+    // onde o id que você digitou é igual ao id que você escreveu
+    // pega essa informação
+    // e então passa por todas essas informações colocando elas dentro de um estado
     db.collection("books")
       .where("book_id", "==", bookId)
       .get()
       .then(snapshot => {
         snapshot.docs.map(doc => {
           this.setState({
-            bookName: doc.data().book_details.book_name
+            bookName: doc.data().book_name
           });
         });
       });
   };
 
+  // fazer a função de pegar o id do estudante do banco de dados
+  // baseia-se na função getbookdetails
   getStudentDetails = studentId => {
-    studentId = studentId.trim();
-    db.collection("students")
-      .where("student_id", "==", studentId)
-      .get()
-      .then(snapshot => {
-        snapshot.docs.map(doc => {
-          this.setState({
-            studentName: doc.data().student_details.student_name
-          });
-        });
-      });
+   
+ 
+    
+    
+    
+    
   };
 
   initiateBookIssue = async (bookId, studentId, bookName, studentName) => {
@@ -148,32 +151,17 @@ export default class TransactionScreen extends Component {
 
   initiateBookReturn = async (bookId, studentId, bookName, studentName) => {
     //adicionar uma transação
-    db.collection("transactions").add({
-      student_id: studentId,
-      student_name: studentName,
-      book_id: bookId,
-      book_name: bookName,
-      date: firebase.firestore.Timestamp.now().toDate(),
-      transaction_type: "return"
-    });
+   
+    
     //alterar status do livro
-    db.collection("books")
-      .doc(bookId)
-      .update({
-        is_book_available: true
-      });
+   
+    
     //alterar o número de livros retirados pelo aluno
-    db.collection("students")
-      .doc(studentId)
-      .update({
-        number_of_books_issued: firebase.firestore.FieldValue.increment(-1)
-      });
-
+   
+    
     // Atualizando o estado local
-    this.setState({
-      bookId: "",
-      studentId: ""
-    });
+  
+    
   };
 
   
@@ -200,7 +188,8 @@ export default class TransactionScreen extends Component {
                 placeholder={"Id do Livro"}
                 placeholderTextColor={"#FFFFFF"}
                 value={bookId}
-                onChangeText={text => this.setState({ bookId: text })}
+               // adicione a funcionalidade de poder escrever
+  
               />
               <TouchableOpacity
                 style={styles.scanbutton}
@@ -215,7 +204,9 @@ export default class TransactionScreen extends Component {
                 placeholder={"Id do Aluno"}
                 placeholderTextColor={"#FFFFFF"}
                 value={studentId}
-                onChangeText={text => this.setState({ studentId: text })}
+                // adicione a funcionalidade de poder escrever
+
+
               />
               <TouchableOpacity
                 style={styles.scanbutton}
